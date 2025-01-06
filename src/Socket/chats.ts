@@ -538,6 +538,24 @@ export const makeChatsSocket = (config: SocketConfig) => {
 		return child?.attrs?.url
 	}
 
+	const profileName = async(jid: string, timeoutMs?: number) => {
+		jid = jidNormalizedUser(jid)
+		const result = await query({
+			tag: 'iq',
+			attrs: {
+				target: jid,
+				to: S_WHATSAPP_NET,
+				type: 'get',
+				xmlns: 'w:mex'
+			},
+			content: [
+				{ tag: 'picture', attrs: { query: '6420453474633624' } }
+			]
+		}, timeoutMs)
+		const child = getBinaryNodeChild(result, 'picture')
+		return child?.attrs?.url
+	}
+
 	const sendPresenceUpdate = async(type: WAPresence, toJid?: string) => {
 		const me = authState.creds.me!
 		if(type === 'available' || type === 'unavailable') {
