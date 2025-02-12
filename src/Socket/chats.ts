@@ -782,6 +782,16 @@ export const makeChatsSocket = (config: SocketConfig) => {
 		}, jid)
 	}
 
+
+	/**
+	 * Remove Contact
+	 */
+	const removeContact = (jid: string) => {
+		return chatModify({
+			contact: null
+		}, jid)
+	}
+
 	/**
 	 * Adds label
 	 */
@@ -1014,6 +1024,7 @@ export const makeChatsSocket = (config: SocketConfig) => {
 		chatModify,
 		cleanDirtyBits,
 		addOrEditContact,
+		removeContact,
 		addLabel,
 		addChatLabel,
 		removeChatLabel,
